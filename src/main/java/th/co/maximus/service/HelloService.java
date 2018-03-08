@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 
 import th.co.maximus.bean.Employee;
+import th.co.maximus.bean.Major;
 
 @Service
 public class HelloService {
@@ -76,6 +77,33 @@ private JdbcTemplate jdbcTemplate;
 			employee.setPhone(rs.getString("phone"));
 			employee.setMajorID(rs.getInt("majorID"));
 			return employee;
+		}
+
+	}
+	
+	public List<Major> findAllMajor() {
+		StringBuilder sql = new StringBuilder();
+		sql.append(" SELECT * FROM major ");
+		return jdbcTemplate.query(sql.toString() , new MappMajor());
+	}
+	
+	public Major findByIDMajor(long id) {
+		StringBuilder sql = new StringBuilder();
+		sql.append(" SELECT * FROM major where id = ");
+		sql.append(id);
+		return jdbcTemplate.queryForObject(sql.toString() , new MappMajor());
+	}
+	
+	private static final class MappMajor implements RowMapper<Major> {
+
+		@Override
+		public Major mapRow(ResultSet rs, int rowNum) throws SQLException {
+			Major major = new Major();
+			major.setId(rs.getInt("id"));
+			major.setName(rs.getString("name"));
+			major.setDescription(rs.getString("description"));
+			major.setFacultyID(rs.getInt("facultyID"));
+			return major;
 		}
 
 	}
