@@ -26,7 +26,7 @@ private JdbcTemplate jdbcTemplate;
 		boolean result = true;
 		StringBuilder sql = new StringBuilder();
 		sql.append(" INSERT INTO student ( studentID, firstname, lastname, email, phone, majorID) ");
-		sql.append(" VALUES (?,?) ");
+		sql.append(" VALUES (?,?,?,?,?,?) ");
 		try {
 			jdbcTemplate.update(sql.toString(), employee.getStudentID(), employee.getFirstName(), employee.getLastName(), employee.getEmail(), employee.getPhone(), employee.getMajorID());
 		}catch(Exception e) {
@@ -41,11 +41,11 @@ private JdbcTemplate jdbcTemplate;
 		sql.append(" UPDATE student ");
 		sql.append(" SET firstname =  ?, lastname = ?, email = ?, phone = ?, majorID = ? ");
 		sql.append(" WHERE studentID = ? ");
-		jdbcTemplate.update(sql.toString(), employee.getFirstName(), employee.getLastName(), employee.getEmail(), employee.getPhone(), employee.getMajorID());
+		jdbcTemplate.update(sql.toString(), employee.getFirstName(), employee.getLastName(), employee.getEmail(), employee.getPhone(), employee.getMajorID(), employee.getStudentID());
 		
 	}
 	
-	public void delete(int id) {
+	public void delete(String id) {
 		StringBuilder sql = new StringBuilder();
 		sql.append(" DELETE from student ");
 		sql.append(" WHERE studentID = ? ");
@@ -58,10 +58,10 @@ private JdbcTemplate jdbcTemplate;
 		return jdbcTemplate.query(sql.toString() , new Mapp());
 	}
 	
-	public Employee findByID(long id) {
+	public Employee findByID(String id) {
 		StringBuilder sql = new StringBuilder();
 		sql.append(" SELECT * FROM student where studentID = ");
-		sql.append(id);
+		sql.append("'"+id+"'");
 		return jdbcTemplate.queryForObject(sql.toString() , new Mapp());
 	}
 	

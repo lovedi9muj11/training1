@@ -27,11 +27,11 @@ public class HelloController {
 	}
 	
 	@PostMapping("/insert/save")
-	public String save(@ModelAttribute("employee") Employee employee, final RedirectAttributes redirectAttributes) {
+	public String save(@ModelAttribute("student") Employee employee, final RedirectAttributes redirectAttributes) {
 		if(service.insert(employee)) {
-			redirectAttributes.addFlashAttribute("saveEmployee", "success");
+			redirectAttributes.addFlashAttribute("saveStudent", "success");
 		} else {
-			redirectAttributes.addFlashAttribute("saveEmployee", "unsuccess");
+			redirectAttributes.addFlashAttribute("saveStudent", "unsuccess");
 		}
 		
 		return "redirect:/";
