@@ -61,7 +61,9 @@ public class HelloController {
 		try {
 			PdfWriter.getInstance(document, baos);
 			document.open();
+			f.addMetaData(document);
 			f.addTitlePage(document);
+			f.addContent(document);
 			document.close();
 			response.setHeader("Expires", "0");
 			response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
